@@ -22,27 +22,36 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef SFML_NETWORK_EXPORT_HPP
-#define SFML_NETWORK_EXPORT_HPP
+#ifndef SFML_SOCKETHANDLE_HPP
+#define SFML_SOCKETHANDLE_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Config.hpp>
 
-
-////////////////////////////////////////////////////////////
-// Define portable import / export macros
-////////////////////////////////////////////////////////////
-#if defined(SFML_NETWORK_EXPORTS)
-
-    #define SFML_NETWORK_API SFML_API_EXPORT
-
-#else
-
-    #define SFML_NETWORK_API SFML_API_IMPORT
-
+#if defined(SFML_SYSTEM_WINDOWS)
+    #include <basetsd.h>
 #endif
 
 
-#endif // SFML_NETWORK_EXPORT_HPP
+namespace sf
+{
+////////////////////////////////////////////////////////////
+// Define the low-level socket handle type, specific to
+// each platform
+////////////////////////////////////////////////////////////
+#if defined(SFML_SYSTEM_WINDOWS)
+
+    typedef UINT_PTR SocketHandle;
+
+#else
+
+    typedef int SocketHandle;
+
+#endif
+
+} // namespace sf
+
+
+#endif // SFML_SOCKETHANDLE_HPP
