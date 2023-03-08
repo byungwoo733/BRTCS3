@@ -22,27 +22,56 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef SFML_SYSTEM_EXPORT_HPP
-#define SFML_SYSTEM_EXPORT_HPP
+
+namespace sf
+{
+////////////////////////////////////////////////////////////
+template <typename T>
+ThreadLocalPtr<T>::ThreadLocalPtr(T* value) :
+ThreadLocal(value)
+{
+}
+
 
 ////////////////////////////////////////////////////////////
-// Headers
-////////////////////////////////////////////////////////////
-#include <SFML/Config.hpp>
+template <typename T>
+T& ThreadLocalPtr<T>::operator *() const
+{
+    return *static_cast<T*>(getValue());
+}
 
 
 ////////////////////////////////////////////////////////////
-// Define portable import / export macros
+template <typename T>
+T* ThreadLocalPtr<T>::operator ->() const
+{
+    return static_cast<T*>(getValue());
+}
+
+
 ////////////////////////////////////////////////////////////
-#if defined(SFML_SYSTEM_EXPORTS)
-
-    #define SFML_SYSTEM_API SFML_API_EXPORT
-
-#else
-
-    #define SFML_SYSTEM_API SFML_API_IMPORT
-
-#endif
+template <typename T>
+ThreadLocalPtr<T>::operator T*() const
+{
+    return static_cast<T*>(getValue());
+}
 
 
-#endif // SFML_SYSTEM_EXPORT_HPP
+////////////////////////////////////////////////////////////
+template <typename T>
+ThreadLocalPtr<T>& ThreadLocalPtr<T>::operator =(T* value)
+{
+    setValue(value);
+    return *this;
+}
+
+
+////////////////////////////////////////////////////////////
+template <typename T>
+ThreadLocalPtr<T>& ThreadLocalPtr<T>::operator =(const ThreadLocalPtr<T>& right)
+{
+    setValue(right.getValue());
+    return *this;
+}
+
+} // namespace sf

@@ -22,27 +22,31 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef SFML_SYSTEM_EXPORT_HPP
-#define SFML_SYSTEM_EXPORT_HPP
+#ifndef SFML_SLEEP_HPP
+#define SFML_SLEEP_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/Config.hpp>
+#include <SFML/System/Export.hpp>
+#include <SFML/System/Time.hpp>
 
 
+namespace sf
+{
 ////////////////////////////////////////////////////////////
-// Define portable import / export macros
+/// \ingroup system
+/// \brief Make the current thread sleep for a given duration
+///
+/// sf::sleep is the best way to block a program or one of its
+/// threads, as it doesn't consume any CPU power.
+///
+/// \param duration Time to sleep
+///
 ////////////////////////////////////////////////////////////
-#if defined(SFML_SYSTEM_EXPORTS)
+void SFML_SYSTEM_API sleep(Time duration);
 
-    #define SFML_SYSTEM_API SFML_API_EXPORT
-
-#else
-
-    #define SFML_SYSTEM_API SFML_API_IMPORT
-
-#endif
+} // namespace sf
 
 
-#endif // SFML_SYSTEM_EXPORT_HPP
+#endif // SFML_SLEEP_HPP
